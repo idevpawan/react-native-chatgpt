@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { onBoardingInfo } from "../Constants";
-import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function Onboarding() {
+//@ts-ignore
+export default function Onboarding({ navigation }) {
   const [currentInfo, setCurrentInfo] = useState(1);
   return (
     <View style={{ height: "100%", alignItems: "center" }}>
@@ -32,7 +32,14 @@ export default function Onboarding() {
       </View>
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => setCurrentInfo(currentInfo + 1)}
+        onPress={() => {
+          if (currentInfo === 3) {
+            setCurrentInfo(currentInfo);
+            navigation.navigate("Home");
+          } else {
+            setCurrentInfo(currentInfo + 1);
+          }
+        }}
       >
         <Text style={styles.buttonContainerText}>
           {currentInfo === 3 ? "Get Started" : "Next"}

@@ -1,8 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { FontSource } from "expo-font";
-import Onboarding from "./pages/Onboarding";
+import Onboarding from "./screens/Onboarding";
 import { useFonts } from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./screens/Home";
+import { APP_NAME } from "./Constants";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   //Loading fonts
@@ -21,11 +27,29 @@ export default function App() {
     return;
   }
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-
-      <Onboarding />
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <Stack.Navigator initialRouteName="Onboarding">
+          <Stack.Screen
+            name="Onboarding"
+            component={Onboarding}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              title: APP_NAME,
+              headerBackVisible: false,
+              gestureEnabled: false,
+            }}
+          />
+        </Stack.Navigator>
+      </View>
+    </NavigationContainer>
   );
 }
 
