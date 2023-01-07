@@ -1,4 +1,4 @@
-const APP_NAME = "ChatGPT";
+const APP_NAME = "EasyAI";
 
 const onBoardingInfo = [
     {
@@ -18,7 +18,24 @@ const onBoardingInfo = [
     }
 ]
 
+const homeListData = [
+    {
+        id: 1,
+        title: "Text Generation",
+        subtitle: "Ask anything, it will generate response in seconds.",
+        routeName: "text_generation"
+    },
+    {
+        id: 2,
+        title: "Image Generation",
+        subtitle: "Think something creative and let our AI generate that for you.",
+        routeName: "image_generation"
+
+    },
+]
+
 export {
     APP_NAME,
-    onBoardingInfo
+    onBoardingInfo,
+    homeListData
 }

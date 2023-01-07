@@ -6,7 +6,10 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
-import { APP_NAME } from "./Constants";
+import { APP_NAME } from "./utils/Constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import TextGeneration from "./screens/TextGeneration";
+import ImageGeneration from "./screens/ImageGeneration";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,11 +29,15 @@ export default function App() {
   if (!fontsLoaded) {
     return;
   }
+  const initialRoute = async () => {
+    const val = await AsyncStorage.getItem("isInfoDone");
+    return val === "done" ? "Home" : "Onboarding";
+  };
   return (
     <NavigationContainer>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Stack.Navigator initialRouteName="Onboarding">
+        <Stack.Navigator initialRouteName={initialRoute.toString()}>
           <Stack.Screen
             name="Onboarding"
             component={Onboarding}
@@ -46,6 +53,16 @@ export default function App() {
               headerBackVisible: false,
               gestureEnabled: false,
             }}
+          />
+          <Stack.Screen
+            name="text_generation"
+            component={TextGeneration}
+            options={{ title: "Text Generation", headerBackTitle: "Home" }}
+          />
+          <Stack.Screen
+            name="image_generation"
+            component={ImageGeneration}
+            options={{ title: "Image Generation", headerBackTitle: "Home" }}
           />
         </Stack.Navigator>
       </View>

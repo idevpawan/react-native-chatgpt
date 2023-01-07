@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { onBoardingInfo } from "../Constants";
+import { onBoardingInfo } from "../utils/Constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-//@ts-ignore
-export default function Onboarding({ navigation }) {
+export default function Onboarding({ navigation }: any) {
   const [currentInfo, setCurrentInfo] = useState(1);
   return (
     <View style={{ height: "100%", alignItems: "center" }}>
@@ -32,9 +32,10 @@ export default function Onboarding({ navigation }) {
       </View>
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => {
+        onPress={async () => {
           if (currentInfo === 3) {
             setCurrentInfo(currentInfo);
+            await AsyncStorage.setItem("isInfoDone", "done");
             navigation.navigate("Home");
           } else {
             setCurrentInfo(currentInfo + 1);
